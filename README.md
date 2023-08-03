@@ -8,7 +8,7 @@ After compilation the following debs can be installed:
 
 This can be run with the following commands:
  - docker build -t lg .
- - docker run \ -v \`pwd\`/output:/mnt lg
+ - docker run -v \`pwd\`/output:/mnt lg
 
 After sucessfull run, debian packages will be placed on ./output folder.
 
