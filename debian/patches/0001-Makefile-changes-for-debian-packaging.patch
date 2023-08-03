@@ -1,0 +1,26 @@
+From: Lennart Weller <lhw@ring0.de>
+Date: Sun, 28 Mar 2021 16:40:31 +0200
+Subject: Makefile changes for debian packaging
+
+ - Include debian package buildflags
+---
+ client/CMakeLists.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/client/CMakeLists.txt b/client/CMakeLists.txt
+index 836f814..109993d 100644
+--- a/client/CMakeLists.txt
++++ b/client/CMakeLists.txt
+@@ -73,9 +73,11 @@ add_compile_options(
+   "-ffast-math"
+   "-fdata-sections"
+   "-ffunction-sections"
+-  "$<$<CONFIG:DEBUG>:-O0;-g3;-ggdb>"
+ )
+ 
++set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} $ENV{CFLAGS}")
++set(CMAKE_CXX_FLAGS "${CMAKE_CPP_FLAGS} $ENV{CPPFLAGS}")
++
+ set(EXE_FLAGS "-Wl,--gc-sections -z noexecstack")
+ set(CMAKE_C_STANDARD 11)
+ 

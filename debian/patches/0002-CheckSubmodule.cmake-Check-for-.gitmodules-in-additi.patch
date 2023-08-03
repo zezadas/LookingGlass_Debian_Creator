@@ -1,0 +1,19 @@
+From: James Lu <james@overdrivenetworks.com>
+Date: Fri, 30 Jun 2023 12:32:15 -0700
+Subject: CheckSubmodule.cmake: Check for .gitmodules in addition to .git
+
+The Debian source tree is stored in a Git repository but is branched off tarballs, so there are no submodules to resolve.
+---
+ cmake/CheckSubmodule.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cmake/CheckSubmodule.cmake b/cmake/CheckSubmodule.cmake
+index 93d0146..c79ed31 100644
+--- a/cmake/CheckSubmodule.cmake
++++ b/cmake/CheckSubmodule.cmake
+@@ -1,4 +1,4 @@
+-if (EXISTS "${PROJECT_TOP}/.git" AND (
++if (EXISTS "${PROJECT_TOP}/.git" AND EXISTS "${PROJECT_TOP}/.gitmodules" AND (
+     (NOT EXISTS "${PROJECT_TOP}/repos/cimgui/.git") OR
+     (NOT EXISTS "${PROJECT_TOP}/repos/LGMP/.git") OR
+     (NOT EXISTS "${PROJECT_TOP}/repos/PureSpice/.git") OR

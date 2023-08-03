@@ -1,0 +1,42 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_CFLAGS_MAINT_APPEND = -O3 -madx -msse4.1
+export DPKG_EXPORT_BUILDFLAGS = 1
+
+include  /usr/share/dpkg/pkg-info.mk
+version	 = $(DEB_VERSION_UPSTREAM)
+export DEB_VERSION
+name=looking-glass
+mod_name=kvmfr
+mod_version=0.0.9
+
+%:
+	dh $@
+
+override_dh_dkms:
+	dh_dkms -p$(name)-module 
+	dh_install -p$(name)-module module/* usr/src/$(mod_name)-$(mod_version)
+
+override_dh_auto_configure:
+	dh_auto_configure --sourcedir client --builddirectory .build/client -- -DOPTIMIZE_FOR_NATIVE=OFF -DENABLE_BACKTRACE=OFF
+	dh_auto_configure --sourcedir host --builddirectory .build/host -- -DOPTIMIZE_FOR_NATIVE=OFF -DENABLE_BACKTRACE=OFF
+	dh_auto_configure --sourcedir obs --builddirectory .build/obs -- -DOPTIMIZE_FOR_NATIVE=OFF -DENABLE_BACKTRACE=OFF
+
+override_dh_auto_build:
+	dh_auto_build --sourcedir client --builddirectory .build/client
+	dh_auto_build --sourcedir host --builddirectory .build/host
+	dh_auto_build --sourcedir obs --builddirectory .build/obs
+
+override_dh_auto_install:
+	dh_auto_install --sourcedir client --builddirectory .build/client
+	dh_auto_install --sourcedir host --builddirectory .build/host
+	dh_auto_install --sourcedir obs --builddirectory .build/obs
+
+override_dh_auto_clean:
+	dh_auto_clean --sourcedir client --builddirectory .build/client
+	dh_auto_clean --sourcedir host --builddirectory .build/host
+	dh_auto_clean --sourcedir obs --builddirectory .build/obs
+
