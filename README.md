@@ -7,8 +7,8 @@ After compilation the following debs can be installed:
  - obs
 
 This can be run with the following commands:
-docker build -t lg .
-docker run -v \
+ - docker build -t lg .
+ - docker run -v \
     /usr/src/linux-headers-$(uname -r):/usr/src/linux-headers-$(uname -r):ro \
     -v/lib/modules/$(uname -r):/lib/modules/$(uname -r):ro \
     -v /usr/src/linux-headers-$(uname -r)-common:/usr/src/linux-headers-$(uname -r)-common:ro \
